@@ -3,45 +3,100 @@
 
 using namespace std;
 
-struct Patient {
+struct node
+{
     string name;
-    int age;
-    string gender;
-    string diagnosis;
+    string id;
+    string pass;
+    node *next;
 };
 
-Patient getPatientInfo() {
-    Patient patient;
-
-    cout << "Enter patient name: ";
-    getline(cin, patient.name);
-
-    cout << "Enter patient age: ";
-    cin >> patient.age;
-    cin.ignore();
-
-    cout << "Enter patient gender: ";
-    getline(cin, patient.gender);
-
-    cout << "Enter patient diagnosis: ";
-    getline(cin, patient.diagnosis);
-
-    return patient;
+node *head = NULL;
+void push(string name, string id, string pass)
+{
+    node *newnode = new node;
+    newnode->name = name;
+    newnode->id = id;
+    newnode->pass = pass;
+    newnode->next = head;
+    head = newnode;
 }
 
-int main() {
-    cout << "Welcome to the Patient Admission System" << endl;
+node* peek()
+{
+    return head;
+}
 
-    Patient newPatient = getPatientInfo();
+node* pop()
+{
+    node* top = head;
+    head = head->next;
+    return top;
+}
 
-    cout << "\nPatient Information Entered:" << endl;
-    cout << "Name: " << newPatient.name << endl;
-    cout << "Age: " << newPatient.age << endl;
-    cout << "Gender: " << newPatient.gender << endl;
-    cout << "Diagnosis: " << newPatient.diagnosis << endl;
+void printList()
+{
+    node* temp = head;
+    while(temp != NULL)
+    {
+        cout << temp->name << " " << temp->id << "\n";
+        temp = temp->next;
+    }
+}
 
+void patientLogin()
+{
+    string id, pass;
+    cout << "Enter patient ID: ";
+    cin >> id;
+    cout << "Enter password: ";
+    cin >> pass;
 
-    cout << "\nThank you for using the Patient Admission System" << endl;
+    node* temp = head;
+    while(temp != NULL)
+    {
+        if(temp->id == id && temp->pass == pass)
+        {
+            cout << "Login successful!\n";
+            return;
+        }
+        temp = temp->next;
+    }
+    cout << "Invalid credentials!\n";
+}
+
+int main()
+{
+    int choice;
+
+    while(1)
+    {
+        cout << "1. Add Patient\n";
+        cout << "2. Patient Login\n";
+        cout << "3. Exit\n";
+        cout << "Enter choice: ";
+        cin >> choice;
+
+        if(choice == 1)
+        {
+            string name, id, pass;
+            cout << "Enter patient name: ";
+            cin >> name;
+            cout << "Enter patient ID: ";
+            cin >> id;
+            cout << "Enter password: ";
+            cin >> pass;
+            push(name, id, pass);
+        }
+        else if(choice == 2)
+        {
+            patientLogin();
+        }
+        else if(choice == 3)
+        {
+            break;
+        }
+    }
 
     return 0;
 }
