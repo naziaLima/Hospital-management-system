@@ -227,6 +227,8 @@ public:
 };
 
 int main() {
+    cout<<"Welcome TO The Hospital Management System"<<endl<<endl;
+    cout<<"Log in as admin"<<endl;
     LinkedList list;
 
     int choice;
